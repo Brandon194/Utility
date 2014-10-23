@@ -1,4 +1,4 @@
-package robotHandler;
+package robot;
 
 import java.awt.Robot;
 
