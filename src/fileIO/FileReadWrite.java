@@ -17,25 +17,38 @@ public class FileReadWrite {
 	String filePath;
 	private String folderName, fileName;
 
+    private boolean debug = false;
+
 	public FileReadWrite(String folderNameIn, String fileNameIn){
 		
 		folderName = folderNameIn;
 		fileName = fileNameIn;
-		
-		filePath = ROOT_FOLDER + "\\" + folderName + "\\" + fileName + ".txt";
+
+        if (debug){
+            filePath = ROOT_FOLDER + "\\TESTING\\" + folderName + "\\" + fileName + ".txt";
+        } else {
+            filePath = ROOT_FOLDER + "\\" + folderName + "\\" + fileName + ".txt";
+        }
 		
 		try{
-			Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\"));
+            if (debug){
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\TESTING\\" + folderName + "\\"));
+            } else {
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\"));
+            }
 			Files.createFile(Paths.get(filePath));
 		}catch(Exception e){
-			System.out.println("Creation Failed");
+			if (!Files.exists(Paths.get(filePath)))
+                System.out.println("Path does not exist, creation failed.");
 		}
 	}
 	
-	public void Writer(String[] InputStringArray){
+	public void writer(String[] InputStringArray){
 		
 		PrintWriter out;
 		try {
+            Files.deleteIfExists(Paths.get(filePath));
+
 			out = new PrintWriter(new FileWriter(filePath, false));
 			
 			for (int i=0;i<InputStringArray.length;i++)
@@ -48,7 +61,7 @@ public class FileReadWrite {
 		}
 	}
 	
-	public List<String> Reader(){
+	public String[] reader(){
 		
 		Path p = (Paths.get(filePath));
 		List<String> l = new ArrayList<String>();
@@ -56,8 +69,12 @@ public class FileReadWrite {
 			l = Files.readAllLines(p, StandardCharsets.UTF_8);
 		}catch(Exception e){
 			System.out.println("Read Fail");
-		}			
+		}
+
+        String[] returnable = new String[l.size()];
+        for (int i=0;i<l.size();i++)
+            returnable[i] = l.get(i);
 		
-		return l;
+		return returnable;
 	}
 }
