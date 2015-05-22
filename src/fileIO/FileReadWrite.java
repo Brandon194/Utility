@@ -3,18 +3,19 @@ package fileIO;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class FileReadWrite {
+    /** Root Folder appdata\Brandon194 */
 	public static final Path ROOT_FOLDER = Paths.get(System.getenv("APPDATA") + "\\Brandon194\\");
-	String filePath;
+    /** Full file path */
+	private final String filePath;
+    /** Fold and File name on disk */
 	private String folderName, fileName;
 
     private boolean debug = false;
@@ -24,15 +25,14 @@ public class FileReadWrite {
 		folderName = folderNameIn;
 		fileName = fileNameIn;
 
-        if (debug){
-            filePath = ROOT_FOLDER + "\\TESTING\\" + folderName + "\\" + fileName + ".txt";
+        if (debug) {
+            filePath = ROOT_FOLDER + "\\" + folderName + "\\Testing\\" + fileName + ".txt";
         } else {
             filePath = ROOT_FOLDER + "\\" + folderName + "\\" + fileName + ".txt";
         }
-		
 		try{
-            if (debug){
-                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\TESTING\\" + folderName + "\\"));
+            if (debug) {
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\Testing\\"));
             } else {
                 Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\"));
             }
@@ -42,7 +42,56 @@ public class FileReadWrite {
                 System.out.println("Path does not exist, creation failed.");
 		}
 	}
-	
+    public FileReadWrite(String folderNameIn, String fileNameIn, String fileType){
+
+        folderName = folderNameIn;
+        fileName = fileNameIn;
+
+        if (debug) {
+            filePath = ROOT_FOLDER + "\\" + folderName + "\\Testing\\" + fileName + fileType;
+        } else {
+            filePath = ROOT_FOLDER + "\\" + folderName + "\\" + fileName + fileType;
+        }
+        try{
+            if (debug) {
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\Testing\\"));
+            } else {
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\"));
+            }
+            Files.createFile(Paths.get(filePath));
+        }catch(Exception e){
+            if (!Files.exists(Paths.get(filePath)))
+                System.out.println("Path does not exist, creation failed.");
+        }
+    }
+    public FileReadWrite(String folderNameIn, String fileNameIn, boolean debug){
+
+        folderName = folderNameIn;
+        fileName = fileNameIn;
+        this.debug = debug;
+
+        if (debug) {
+            filePath = ROOT_FOLDER + "\\" + folderName + "\\Testing\\" + fileName + ".txt";
+        } else {
+            filePath = ROOT_FOLDER + "\\" + folderName + "\\" + fileName + ".txt";
+        }
+        try{
+            if (debug) {
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\Testing\\"));
+            } else {
+                Files.createDirectories(Paths.get(ROOT_FOLDER + "\\" + folderName + "\\"));
+            }
+            Files.createFile(Paths.get(filePath));
+        }catch(Exception e){
+            if (!Files.exists(Paths.get(filePath)))
+                System.out.println("Path does not exist, creation failed.");
+        }
+    }
+
+    /**
+     * Writes an array of Strings to disk. Each element is a line
+     * @param InputStringArray String Array
+     */
 	public void writer(String[] InputStringArray){
 		
 		PrintWriter out;
@@ -60,7 +109,11 @@ public class FileReadWrite {
 			System.out.println("Write Failed");
 		}
 	}
-	
+
+    /**
+     * Reads the file from disk, each line is a new element of the array
+     * @return String Array
+     */
 	public String[] reader(){
 		
 		Path p = (Paths.get(filePath));
@@ -77,4 +130,19 @@ public class FileReadWrite {
 		
 		return returnable;
 	}
+
+    /**
+     * deletes this file
+     */
+    public void delete(){
+        try{
+            Files.deleteIfExists(Paths.get(filePath));
+        }catch(Exception e){
+            System.out.println("Failed to Delete");
+        }
+    }
+
+    public void setDebug(boolean debug){
+        this.debug = debug;
+    }
 }

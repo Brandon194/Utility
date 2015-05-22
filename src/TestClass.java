@@ -1,3 +1,4 @@
+import dateTime.DateTime;
 import fileIO.FileReadWrite;
 
 /**
@@ -6,6 +7,6 @@ import fileIO.FileReadWrite;
 public class TestClass {
 
     public static void main(String[] args){
-        FileReadWrite f = new FileReadWrite("Test\\Test1", "This is a test");
+        new DateTime();
     }
 }
