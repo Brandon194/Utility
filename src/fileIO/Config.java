@@ -92,6 +92,22 @@ public class Config {
         frw.writer(configs);
     }
 
+    public boolean doesExist(String configName){
+        if (findConfigIndex(configName) != -1) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getValue(String configName){
+        for (int i=0;i<configs.length;i++){
+            if (configs[i].contains(configName)){
+                return configs[i].substring(configName.length()+1);
+            }
+        }
+        return null;
+    }
+
     public String toString(){
         String returnable = "";
         for (String s : configs){
