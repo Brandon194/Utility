@@ -1,7 +1,6 @@
 package misc;
 
 import fileIO.Config;
-import interfaces.MyJComponent;
 
 /**
  * Created by Brandon194 on 6/2/2015.
@@ -25,4 +24,6 @@ public class Settings {
     public boolean getDebug() {
         return debug;
     }
+
+
 }
