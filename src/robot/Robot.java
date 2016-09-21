@@ -1,5 +1,8 @@
 package robot;
 
+
+import java.awt.event.KeyEvent;
+
 public class Robot {
 	java.awt.Robot r;
 	

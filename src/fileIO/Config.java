@@ -10,8 +10,12 @@ public class Config {
     private String[] configs;
 
     public Config(String projectName){
-        frw = new FileReadWrite(projectName, projectName, ".cfg");
-        configs = frw.reader();
+        frw = new FileReadWrite(projectName, projectName, "cfg");
+        configs = frw.read();
+    }
+    public Config(String projectName,String fileName){
+        frw = new FileReadWrite(projectName, fileName, "cfg");
+        configs = frw.read();
     }
 
     /**
@@ -89,7 +93,7 @@ public class Config {
      * apply the changes to the file writen on disk
      */
     public void saveChanges(){
-        frw.writer(configs);
+        frw.write(configs);
     }
 
     public boolean doesExist(String configName){

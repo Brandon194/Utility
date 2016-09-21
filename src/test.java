@@ -1,4 +1,5 @@
 import fileIO.DirectoryList;
+import fileIO.FileReadWrite;
 
 import java.io.File;
 import java.util.jar.JarFile;
@@ -9,11 +10,14 @@ import java.util.jar.JarFile;
 public class test {
 
     public static void main(String[] args){
-        try {
-            DirectoryList.addLibrary(new File("C:\\Users\\Brandon194\\AppData\\Roaming\\Brandon194\\WorkCalculator\\WorkCalculator_B2.6_P1.jar"));
-            DirectoryList.jar("WorkCalculator", "WorkCalculator_B2.6_P1", args);
-        }catch(Exception e){
+        FileReadWrite frw1 = new FileReadWrite("Test","test1");
+        FileReadWrite frw2 = new FileReadWrite("Test","test2");
 
-    }
+        String[][] s = FileReadWrite.readCSV(frw1.read());
+        String[] ss = FileReadWrite.makeCSV(s);
+
+        frw2.write(ss);
+
+        System.out.println("Done");
     }
 }
