@@ -1,6 +1,5 @@
 package fileIO;
 
-import sun.plugin.JavaRunTime;
 
 import java.io.File;
 import java.io.IOException;
